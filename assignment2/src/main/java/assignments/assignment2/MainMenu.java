@@ -1,10 +1,8 @@
 package assignments.assignment2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
@@ -15,7 +13,7 @@ public class MainMenu {
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     private static Calendar cal = Calendar.getInstance();
     private static Nota[] notaList;
-    private static Set<String> memberList = new HashSet<String>();
+    private static HashMap<String, String> memberList = new HashMap<String, String>();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -44,29 +42,37 @@ public class MainMenu {
         System.out.println("Masukan nomor handphone Anda:");
         String noHp = input.nextLine();
         while (!isDigit(noHp)) {
-            // memeriksa apakah nomor HP hanya terdiri dari angka
             System.out.println("Field nomor hp hanya menerima digit.");
             noHp = input.nextLine();
         }
         Member newMember = new Member(nama, noHp);
-        if(memberList.contains(newMember.getId())) {
+        if(memberList.containsKey(newMember.getId())) {
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!", nama, noHp);
         } else {
-            memberList.add(newMember.getId());
+            memberList.put(newMember.getId(), nama);
             System.out.printf("Berhasil membuat member dengan ID %s!", newMember.getId());
         }
     }
-
+    
     private static void handleGenerateNota() {
         // TODO: handle ambil cucian
+        System.out.println("Masukan ID member:");
+        String id = input.nextLine();
+        if(!memberList.containsKey(id)){
+            System.out.printf("Member dengan ID %s tidak ditemukan!\n", id);
+            return;
+        }
     }
 
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
     }
-
+    
     private static void handleListUser() {
-        // TODO: handle list semua user pada sistem
+        System.out.printf("Terdaftar %d member dalam sistem.\n", memberList.size());
+        for(String i:memberList.keySet()) {
+            System.out.printf("- %s : %s\n", i, memberList.get(i));
+        }
     }
 
     private static void handleAmbilCucian() {
