@@ -36,39 +36,24 @@ public class NotaGenerator {
             // generate nota
             System.out.println("Masukkan nama Anda:");
             String nama = input.nextLine();
-            String nomorHP = "";
-            valid = false;
             System.out.println("Masukkan nomor handphone Anda:");
-            while (!valid) {
-                // memeriksa apakah nomor HP hanya terdiri dari angka
-                valid = true;
-                nomorHP = input.nextLine();
-                for (int i = 0; i < nomorHP.length(); i++) {
-                    if (nomorHP.charAt(i) < '0' || '9' < nomorHP.charAt(i)) {
-                        System.out.println("Nomor hp hanya menerima digit");
-                        valid = false;
-                        break;
-                    }
-                }
+			String nomorHP = input.nextLine();
+            while (!isDigit(nomorHP)) {
+				// memeriksa apakah nomor HP hanya terdiri dari angka
+				System.out.println("Nomor hp hanya menerima digit");
+				nomorHP = input.nextLine();
             }
             System.out.printf("ID Anda : %s\n", generateId(nama, nomorHP));
         } else if (pilihan.equals("2")) {
             System.out.println("Masukkan nama Anda:");
             String nama = input.nextLine();
-            valid = false;
             String nomorHP = "";
             System.out.println("Masukkan nomor handphone Anda:");
-            while (!valid) {
-                // memeriksa apakah nomor HP hanya terdiri dari angka
-                valid = true;
-                nomorHP = input.nextLine();
-                for (int i = 0; i < nomorHP.length(); i++) {
-                    if (nomorHP.charAt(i) < '0' || '9' < nomorHP.charAt(i)) {
-                        System.out.println("Nomor hp hanya menerima digit");
-                        valid = false;
-                        break;
-                    }
-                }
+			nomorHP = input.nextLine();
+            while (!isDigit(nomorHP)) {
+				// memeriksa apakah nomor HP hanya terdiri dari angka
+				System.out.println("Nomor hp hanya menerima digit");
+				nomorHP = input.nextLine();
             }
             String id = generateId(nama, nomorHP);
             System.out.println("Masukkan tanggal terima:");
@@ -206,5 +191,14 @@ public class NotaGenerator {
             ret = "0" + ret;
         }
         return ret;
+      }
+
+      public static boolean isDigit(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < '0' || '9' < s.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
       }
 }

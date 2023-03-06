@@ -1,7 +1,12 @@
 package assignments.assignment2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 import static assignments.assignment1.NotaGenerator.*;
 
@@ -10,7 +15,7 @@ public class MainMenu {
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     private static Calendar cal = Calendar.getInstance();
     private static Nota[] notaList;
-    private static Member[] memberList;
+    private static Set<String> memberList = new HashSet<String>();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -34,7 +39,22 @@ public class MainMenu {
     }
 
     private static void handleGenerateUser() {
-        // TODO: handle generate user
+        System.out.println("Masukan nama Anda:");
+        String nama = input.nextLine();
+        System.out.println("Masukan nomor handphone Anda:");
+        String noHp = input.nextLine();
+        while (!isDigit(noHp)) {
+            // memeriksa apakah nomor HP hanya terdiri dari angka
+            System.out.println("Field nomor hp hanya menerima digit.");
+            noHp = input.nextLine();
+        }
+        Member newMember = new Member(nama, noHp);
+        if(memberList.contains(newMember.getId())) {
+            System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!", nama, noHp);
+        } else {
+            memberList.add(newMember.getId());
+            System.out.printf("Berhasil membuat member dengan ID %s!", newMember.getId());
+        }
     }
 
     private static void handleGenerateNota() {
