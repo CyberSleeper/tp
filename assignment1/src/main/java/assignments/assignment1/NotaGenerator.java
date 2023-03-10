@@ -81,11 +81,23 @@ public class NotaGenerator {
                 // memeriksa apakah berat merupakan bilangan
                 valid = true;
                 String tmp = input.nextLine();
+                for(int i = 0; i < tmp.length(); i++){
+                    if(tmp.charAt(i)<'0' || '9'<tmp.charAt(i)){
+                        System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                        valid = false;
+                    }
+                }
+                if(!valid) continue;
                 try {
                     berat = Integer.parseInt(tmp);
                 } catch (Exception e) {
-                    valid = false;
                     System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                    valid = false;
+                }
+                if(!valid) continue;
+                if(berat < 1){
+                    System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                    valid = false;
                 }
             }
             if (berat < 2) {
