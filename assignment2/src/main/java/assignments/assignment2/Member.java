@@ -16,5 +16,6 @@ public class Member {
     // TODO: tambahkan methods yang diperlukan untuk class ini
     public String getId() {
         return this.id;
+    
     }
 }

@@ -1,9 +1,13 @@
 package assignments.assignment2;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Set;
+
+import assignments.assignment1.NotaGenerator;
+
 import java.util.Objects;
 
 import static assignments.assignment1.NotaGenerator.*;
@@ -12,8 +16,8 @@ public class MainMenu {
     private static final Scanner input = new Scanner(System.in);
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     private static Calendar cal = Calendar.getInstance();
-    private static Nota[] notaList;
-    private static HashMap<String, String> memberList = new HashMap<String, String>();
+    private static ArrayList<Nota> notaList = new ArrayList<Nota>();
+    private static HashMap<String, Member> memberList = new HashMap<String, Member>();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -49,7 +53,7 @@ public class MainMenu {
         if(memberList.containsKey(newMember.getId())) {
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!", nama, noHp);
         } else {
-            memberList.put(newMember.getId(), nama);
+            memberList.put(newMember.getId(), newMember);
             System.out.printf("Berhasil membuat member dengan ID %s!", newMember.getId());
         }
     }
@@ -62,6 +66,62 @@ public class MainMenu {
             System.out.printf("Member dengan ID %s tidak ditemukan!\n", id);
             return;
         }
+        boolean valid = false;
+        System.out.println("Masukan paket laundry:");
+        String paket = "";
+        while (!valid) {
+            // memeriksa apakah pengguna telah memilih paket yang valid
+            System.out.println("Masukkan paket laundry:");
+            paket = input.nextLine();
+            String tmp = paket.toLowerCase();
+            if (tmp.equals("express") || tmp.equals("fast") || tmp.equals("reguler")) {
+                valid = true;
+            } else if (tmp.equals("?")) {
+                NotaGenerator.showPaket();
+            } else {
+                System.out.printf("Paket %s tidak diketahui\n", paket);
+                System.out.printf("[ketik ? untuk mencari tahu jenis paket]\n");
+            }
+        }
+        System.out.println("Masukkan berat cucian Anda [Kg]:");
+        valid = false;
+        int berat = 0;
+        while (!valid) {
+            // memeriksa apakah berat merupakan bilangan
+            valid = true;
+            String tmp = input.nextLine();
+            for(int i = 0; i < tmp.length(); i++){
+                if(tmp.charAt(i)<'0' || '9'<tmp.charAt(i)){
+                    System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                    valid = false;
+                }
+            }
+            if(!valid) continue;
+            try {
+                berat = Integer.parseInt(tmp);
+            } catch (Exception e) {
+                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                valid = false;
+            }
+            if(!valid) continue;
+            if(berat < 1){
+                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+                valid = false;
+            }
+        }
+        if (berat < 2) {
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            berat = 2;
+        }
+        System.out.println("Berhasil menambahkan nota!");
+        int idNota = Nota.getBanyakNota();
+        System.out.printf("[ID Nota = %d]\n", idNota);
+        String tanggalMasuk = fmt.format(cal.getTime());
+        System.out.println(generateNota(id, paket, berat, tanggalMasuk));
+        String status = "Belum bisa diambil :(";
+        System.out.printf("Status\t\t: %s\n", status);
+        Nota newNota = new Nota(memberList.get(id), paket, berat, tanggalMasuk);
+        notaList.add(newNota);
     }
 
     private static void handleListNota() {
@@ -80,7 +140,7 @@ public class MainMenu {
     }
 
     private static void handleNextDay() {
-        // TODO: handle ganti hari
+        cal.add(Calendar.DATE, 1);
     }
 
     private static void printMenu() {

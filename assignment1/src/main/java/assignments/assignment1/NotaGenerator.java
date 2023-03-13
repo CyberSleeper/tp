@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Scanner;
 
 public class NotaGenerator {
+    // Nota
     private static final Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
         // program akan terus mengulang hingga exit(0)
@@ -64,10 +65,10 @@ public class NotaGenerator {
                 // memeriksa apakah pengguna telah memilih paket yang valid
                 System.out.println("Masukkan paket laundry:");
                 paket = input.nextLine();
-                paket = paket.toLowerCase();
-                if (paket.equals("express") || paket.equals("fast") || paket.equals("reguler")) {
+                String tmp = paket.toLowerCase();
+                if (tmp.equals("express") || tmp.equals("fast") || tmp.equals("reguler")) {
                     valid = true;
-                } else if (paket.equals("?")) {
+                } else if (tmp.equals("?")) {
                     showPaket();
                 } else {
                     System.out.printf("Paket %s tidak diketahui\n", paket);
@@ -114,7 +115,7 @@ public class NotaGenerator {
     /**
      * Method untuk menampilkan paket.
      */
-    private static void showPaket() {
+    public static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
@@ -152,13 +153,13 @@ public class NotaGenerator {
     
     public static String generateNota(String id, String paket, int berat, String tanggalTerima){
         int hargaPaketPerKg = 0, totalHarga, durasi=0;
-        if (paket.equals("express")) {
+        if (paket.toLowerCase().equals("express")) {
             hargaPaketPerKg = 12000;
             durasi = 1;
-        } else if (paket.equals("fast")) {
+        } else if (paket.toLowerCase().equals("fast")) {
             hargaPaketPerKg = 10000;
             durasi = 2;
-        } else if (paket.equals("reguler")) {
+        } else if (paket.toLowerCase().equals("reguler")) {
             hargaPaketPerKg = 7000;
             durasi = 3;
         }
@@ -180,7 +181,8 @@ public class NotaGenerator {
             Harga :
             %d kg x %d = %d
             Tanggal Terima  : %s
-            Tanggal Selesai : %s""", id, paket, berat, hargaPaketPerKg, totalHarga, tanggalTerima, tanggalSelesai);
+            Tanggal Selesai : %s""", 
+            id, paket, berat, hargaPaketPerKg, totalHarga, tanggalTerima, tanggalSelesai);
         return ret;
     }
 
