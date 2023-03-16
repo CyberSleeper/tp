@@ -18,6 +18,7 @@ public class Nota {
         this.member = member;
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
+        // inisialisasi sisa hari berdasarkan paket
         if (paket.toLowerCase().equals("express")) {
             this.sisaHariPengerjaan = 1;
         } else if (paket.toLowerCase().equals("fast")) {
@@ -38,6 +39,7 @@ public class Nota {
     }
 
     public String getStatus() {
+        // get status berdasarkan isReady
         if (isReady) {
             return "Sudah dapat diambil!";
         } else {
@@ -50,7 +52,9 @@ public class Nota {
     }
 
     public void nextDay() {
+        // mengurangi sisa hari sebanyak 1, paling sedikit menjadi 0
         this.sisaHariPengerjaan = Math.max(0, this.sisaHariPengerjaan - 1);
+        // mengubah status ketika sisa hari = 0
         if (sisaHariPengerjaan == 0) {
             isReady = true;
         }

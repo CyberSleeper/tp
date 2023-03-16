@@ -11,7 +11,7 @@ public class Member {
         this.nama = nama;
         this.noHp = noHp;
         this.id = NotaGenerator.generateId(nama, noHp);
-        bonusCounter = 0;
+        this.bonusCounter = 0;
     }
 
     public String getId() {
@@ -22,6 +22,7 @@ public class Member {
         return this.nama;
     }
 
+    // Method set dengan modulo
     public void setBonusCounter(int x) {
         this.bonusCounter = x % 3;
     }

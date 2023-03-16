@@ -45,11 +45,14 @@ public class MainMenu {
         String nama = input.nextLine();
         System.out.println("Masukan nomor handphone Anda:");
         String noHp = input.nextLine();
+        // validasi nomor HP
         while (!isDigit(noHp)) {
             System.out.println("Field nomor hp hanya menerima digit.");
             noHp = input.nextLine();
         }
+        // inisialisasi member baru
         Member newMember = new Member(nama, noHp);
+        // periksa apakah member telah ada
         if(memberList.containsKey(newMember.getId())) {
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
         } else {
@@ -61,6 +64,7 @@ public class MainMenu {
     private static void handleGenerateNota() {
         System.out.println("Masukan ID member:");
         String id = input.nextLine();
+        // Periksa apakah member dengan id spesifik telah ada di list member
         if(!memberList.containsKey(id)){
             System.out.printf("Member dengan ID %s tidak ditemukan!\n", id);
             return;
@@ -85,7 +89,7 @@ public class MainMenu {
         valid = false;
         int berat = 0;
         while (!valid) {
-            // memeriksa apakah berat merupakan bilangan
+            // memeriksa apakah berat merupakan bilangan bulat positif
             valid = true;
             String tmp = input.nextLine();
             for(int i = 0; i < tmp.length(); i++){
@@ -117,14 +121,19 @@ public class MainMenu {
         int idNota = Nota.getBanyakNota();
         System.out.printf("[ID Nota = %d]\n", idNota);
         String tanggalMasuk = fmt.format(cal.getTime());
+        // menambahkan counter bonus
         member.setBonusCounter(member.getBonusCounter() + 1);
+        // print nota dengan memeriksa apakah mendapat diskon atau tidak
         System.out.println(generateNota(id, paket, berat, tanggalMasuk, (member.getBonusCounter() == 0)));
+
+        // menambahkan nota baru ke list nota
         Nota newNota = new Nota(member, paket, berat, tanggalMasuk);
-        System.out.printf("Status\t\t: %s\n", newNota.getStatus());
         notaList.add(newNota);
+        System.out.printf("Status\t\t: %s\n", newNota.getStatus());
     }
 
     private static void handleListNota() {
+        // fungsi untuk mengeluarkan semua nota
         System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size());
         for(Nota i:notaList) {
             System.out.printf("- [%d] Status\t\t: %s\n", i.getIdNota(), i.getStatus());
@@ -132,6 +141,7 @@ public class MainMenu {
     }
     
     private static void handleListUser() {
+        // fungsi untuk mengeluarkan semua member
         System.out.printf("Terdaftar %d member dalam sistem.\n", memberList.size());
         for(String i:memberList.keySet()) {
             System.out.printf("- %s : %s\n", i, memberList.get(i).getNama());
@@ -143,7 +153,7 @@ public class MainMenu {
         boolean valid = false;
         int id = 0;
         while (!valid) {
-            // memeriksa apakah berat merupakan bilangan
+            // memeriksa apakah id merupakan bilangan
             valid = true;
             String tmp = input.nextLine();
             for(int i = 0; i < tmp.length(); i++){
@@ -160,8 +170,8 @@ public class MainMenu {
                 System.out.println("ID nota berbentuk angka!");
                 valid = false;
             }
-            if(!valid) continue;
         }
+        // buat objek nota dengan id yang sesuai
         Nota nota = cariNota(id);
         if (nota == null) {
             System.out.printf("Nota dengan ID %d tidak ditemukan!\n", id);
@@ -179,8 +189,10 @@ public class MainMenu {
     }
 
     private static void handleNextDay() {
+        // menambahkan hari sebanyak 1
         cal.add(Calendar.DATE, 1);
         System.out.printf("Dek Depe tidur hari ini... zzz...\n");
+        // mengeluarkan semua nota yang sudah dapat diambil
         for(int i = 0; i < notaList.size(); i++) {
             notaList.get(i).nextDay();
             if(notaList.get(i).getIsReady())
