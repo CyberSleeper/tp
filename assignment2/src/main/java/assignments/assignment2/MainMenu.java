@@ -51,15 +51,14 @@ public class MainMenu {
         }
         Member newMember = new Member(nama, noHp);
         if(memberList.containsKey(newMember.getId())) {
-            System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!", nama, noHp);
+            System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
         } else {
             memberList.put(newMember.getId(), newMember);
-            System.out.printf("Berhasil membuat member dengan ID %s!", newMember.getId());
+            System.out.printf("Berhasil membuat member dengan ID %s!\n", newMember.getId());
         }
     }
     
     private static void handleGenerateNota() {
-        // TODO: handle ambil cucian
         System.out.println("Masukan ID member:");
         String id = input.nextLine();
         if(!memberList.containsKey(id)){
@@ -67,11 +66,10 @@ public class MainMenu {
             return;
         }
         boolean valid = false;
-        System.out.println("Masukan paket laundry:");
         String paket = "";
         while (!valid) {
             // memeriksa apakah pengguna telah memilih paket yang valid
-            System.out.println("Masukkan paket laundry:");
+            System.out.println("Masukan paket laundry:");
             paket = input.nextLine();
             String tmp = paket.toLowerCase();
             if (tmp.equals("express") || tmp.equals("fast") || tmp.equals("reguler")) {
@@ -94,6 +92,7 @@ public class MainMenu {
                 if(tmp.charAt(i)<'0' || '9'<tmp.charAt(i)){
                     System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                     valid = false;
+                    break;
                 }
             }
             if(!valid) continue;
@@ -118,29 +117,68 @@ public class MainMenu {
         System.out.printf("[ID Nota = %d]\n", idNota);
         String tanggalMasuk = fmt.format(cal.getTime());
         System.out.println(generateNota(id, paket, berat, tanggalMasuk));
-        String status = "Belum bisa diambil :(";
-        System.out.printf("Status\t\t: %s\n", status);
         Nota newNota = new Nota(memberList.get(id), paket, berat, tanggalMasuk);
+        System.out.printf("Status\t\t: %s\n", newNota.getStatus());
         notaList.add(newNota);
     }
 
     private static void handleListNota() {
-        // TODO: handle list semua nota pada sistem
+        System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size());
+        for(Nota i:notaList) {
+            System.out.printf("- [%d] Status\t: %s\n", i.getIdNota(), i.getStatus());
+        }
     }
     
     private static void handleListUser() {
         System.out.printf("Terdaftar %d member dalam sistem.\n", memberList.size());
         for(String i:memberList.keySet()) {
-            System.out.printf("- %s : %s\n", i, memberList.get(i));
+            System.out.printf("- %s : %s\n", i, memberList.get(i).getNama());
         }
     }
-
+    
     private static void handleAmbilCucian() {
-        // TODO: handle ambil cucian
+        System.out.println("Masukan ID nota yang akan diambil:");
+        boolean valid = false;
+        int id = 0;
+        while (!valid) {
+            // memeriksa apakah berat merupakan bilangan
+            valid = true;
+            String tmp = input.nextLine();
+            for(int i = 0; i < tmp.length(); i++){
+                if(tmp.charAt(i)<'0' || '9'<tmp.charAt(i)){
+                    System.out.println("ID nota berbentuk angka!");
+                    valid = false;
+                    break;
+                }
+            }
+            if(!valid) continue;
+            try {
+                id = Integer.parseInt(tmp);
+            } catch (Exception e) {
+                System.out.println("ID nota berbentuk angka!");
+                valid = false;
+            }
+            if(!valid) continue;
+        }
+        Nota nota = cariNota(id);
+        if (nota == null) {
+            System.out.printf("Nota dengan ID %d tidak ditemukan!\n", id);
+        } else if (nota.getIsReady() == false) {
+            System.out.printf("Nota dengan ID %d gagal diambil!\n", id);
+        } else {
+            System.out.printf("Nota dengan ID %d berhasil diambil!\n", id);
+        }
     }
 
     private static void handleNextDay() {
         cal.add(Calendar.DATE, 1);
+        System.out.printf("Dek Depe tidur hari ini... zzz...\n");
+        for(int i = 0; i < notaList.size(); i++) {
+            notaList.get(i).nextDay();
+            System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", notaList.get(i).getIdNota());
+        }
+        System.out.printf("Selamat pagi dunia!\n");
+        System.out.printf("Dek Depe: It's CuciCuci Time.\n");
     }
 
     private static void printMenu() {
@@ -156,4 +194,12 @@ public class MainMenu {
         System.out.println("[0] Exit");
     }
 
+    private static Nota cariNota(int cariId) {
+        for (Nota i: notaList){
+            if (i.getIdNota() == cariId) {
+                return i;
+            }
+        }
+        return null;
+    }
 }
