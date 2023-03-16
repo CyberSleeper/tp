@@ -106,7 +106,7 @@ public class NotaGenerator {
                 berat = 2;
             }
             System.out.println("Nota Laundry");
-            System.out.println(generateNota(id, paket, berat, tanggalTerima));
+            System.out.println(generateNota(id, paket, berat, tanggalTerima, false));
         } else {
             System.out.println("Perintah tidak diketahui, silakan periksa kembali.");
         }
@@ -151,7 +151,7 @@ public class NotaGenerator {
      *         <p>Tanggal Selesai : [tanggalTerima + LamaHariPaket]
      */
     
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima){
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, boolean isDiskon){
         int hargaPaketPerKg = 0, totalHarga, durasi=0;
         if (paket.toLowerCase().equals("express")) {
             hargaPaketPerKg = 12000;
@@ -175,14 +175,18 @@ public class NotaGenerator {
         c.add(Calendar.DATE, durasi);
         tanggalSelesai = sdf.format(c.getTime());
         totalHarga = berat * hargaPaketPerKg;
+        String diskon = "";
+        if (isDiskon) {
+            diskon = String.format(" = %d (Discount member 50%%!!!)", totalHarga/2);
+        }
         String ret = String.format("""
             ID    : %s
             Paket : %s
             Harga :
-            %d kg x %d = %d
+            %d kg x %d = %d %s
             Tanggal Terima  : %s
             Tanggal Selesai : %s""", 
-            id, paket, berat, hargaPaketPerKg, totalHarga, tanggalTerima, tanggalSelesai);
+            id, paket, berat, hargaPaketPerKg, totalHarga, diskon, tanggalTerima, tanggalSelesai);
         return ret;
     }
 

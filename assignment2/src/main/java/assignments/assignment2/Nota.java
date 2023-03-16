@@ -19,11 +19,11 @@ public class Nota {
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
         if (paket.toLowerCase().equals("express")) {
-            sisaHariPengerjaan = 1;
+            this.sisaHariPengerjaan = 1;
         } else if (paket.toLowerCase().equals("fast")) {
-            sisaHariPengerjaan = 2;
+            this.sisaHariPengerjaan = 2;
         } else if (paket.toLowerCase().equals("reguler")) {
-            sisaHariPengerjaan = 3;
+            this.sisaHariPengerjaan = 3;
         }
         isReady = false;
         banyakNota++;
@@ -50,7 +50,7 @@ public class Nota {
     }
 
     public void nextDay() {
-        sisaHariPengerjaan = Math.max(0, sisaHariPengerjaan - 1);
+        this.sisaHariPengerjaan = Math.max(0, this.sisaHariPengerjaan - 1);
         if (sisaHariPengerjaan == 0) {
             isReady = true;
         }

@@ -112,12 +112,14 @@ public class MainMenu {
             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
             berat = 2;
         }
+        Member member = memberList.get(id);
         System.out.println("Berhasil menambahkan nota!");
         int idNota = Nota.getBanyakNota();
         System.out.printf("[ID Nota = %d]\n", idNota);
         String tanggalMasuk = fmt.format(cal.getTime());
-        System.out.println(generateNota(id, paket, berat, tanggalMasuk));
-        Nota newNota = new Nota(memberList.get(id), paket, berat, tanggalMasuk);
+        member.setBonusCounter(member.getBonusCounter() + 1);
+        System.out.println(generateNota(id, paket, berat, tanggalMasuk, (member.getBonusCounter() == 0)));
+        Nota newNota = new Nota(member, paket, berat, tanggalMasuk);
         System.out.printf("Status\t\t: %s\n", newNota.getStatus());
         notaList.add(newNota);
     }
@@ -125,7 +127,7 @@ public class MainMenu {
     private static void handleListNota() {
         System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size());
         for(Nota i:notaList) {
-            System.out.printf("- [%d] Status\t: %s\n", i.getIdNota(), i.getStatus());
+            System.out.printf("- [%d] Status\t\t: %s\n", i.getIdNota(), i.getStatus());
         }
     }
     
@@ -166,6 +168,12 @@ public class MainMenu {
         } else if (nota.getIsReady() == false) {
             System.out.printf("Nota dengan ID %d gagal diambil!\n", id);
         } else {
+            for (int i = 0; i < notaList.size(); i++){
+                if(notaList.get(i).getIdNota() == id) {
+                    notaList.remove(i);
+                    break;
+                }
+            }
             System.out.printf("Nota dengan ID %d berhasil diambil!\n", id);
         }
     }
@@ -175,7 +183,8 @@ public class MainMenu {
         System.out.printf("Dek Depe tidur hari ini... zzz...\n");
         for(int i = 0; i < notaList.size(); i++) {
             notaList.get(i).nextDay();
-            System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", notaList.get(i).getIdNota());
+            if(notaList.get(i).getIsReady())
+                System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", notaList.get(i).getIdNota());
         }
         System.out.printf("Selamat pagi dunia!\n");
         System.out.printf("Dek Depe: It's CuciCuci Time.\n");

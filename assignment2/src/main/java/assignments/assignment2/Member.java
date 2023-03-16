@@ -21,4 +21,12 @@ public class Member {
     public String getNama() {
         return this.nama;
     }
+
+    public void setBonusCounter(int x) {
+        this.bonusCounter = x % 3;
+    }
+
+    public int getBonusCounter() {
+        return this.bonusCounter;
+    }
 }
