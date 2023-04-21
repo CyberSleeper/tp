@@ -33,10 +33,12 @@ public class EmployeeSystem extends SystemCLI {
             for (Nota nota:notaList) {
                 System.out.println(nota.kerjakan());
             }
+            System.out.println();
         } else if (choice == 2) {
             for (Nota nota:notaList) {
                 System.out.println(nota.getNotaStatus());
             }
+            System.out.println();
         } else if (choice == 3) {
             return true;
         } else {

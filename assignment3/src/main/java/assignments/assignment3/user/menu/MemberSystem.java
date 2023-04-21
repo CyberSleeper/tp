@@ -18,7 +18,6 @@ public class MemberSystem extends SystemCLI {
      */
     @Override
     protected boolean processChoice(int choice) {
-        // TODO
         if (choice == 1) {
             boolean valid = false;
             String paket = "";
@@ -74,7 +73,7 @@ public class MemberSystem extends SystemCLI {
             boolean setrika = !in.nextLine().equals("x");
             System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!");
             System.out.println("Cuma 2000 / 4kg, kemudian 500 / kg");
-            System.out.println("[Ketik x untuk tidak mau]: ");
+            System.out.print("[Ketik x untuk tidak mau]: ");
             boolean antar = !in.nextLine().equals("x");
             String tanggalMasuk = fmt.format(cal.getTime());
 
@@ -88,16 +87,13 @@ public class MemberSystem extends SystemCLI {
 
             loginMember.addNota(newNota);
 
-            System.out.println("Nota berhasil dibuat!");
+            System.out.println("Nota berhasil dibuat!\n");
         } else if (choice == 2) {
             for (Nota nota:loginMember.getNotaList()) {
                 System.out.println(nota.toString());
-                System.out.println();
             }
         } else if (choice == 3) {
             return true;
-        } else {
-
         }
         return false;
     }

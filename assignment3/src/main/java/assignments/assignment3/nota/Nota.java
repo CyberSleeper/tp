@@ -110,14 +110,14 @@ public class Nota {
             %d kg x %d = %d
             tanggal terima  : %s
             tanggal selesai : %s
-            --- SERVICE LIST ---
-            """, id, member.getId(), paket, berat, baseHarga, berat*baseHarga, tanggalMasuk, tanggalSelesai);
+            --- SERVICE LIST ---"""
+            , id, member.getId(), paket, berat, baseHarga, berat*baseHarga, tanggalMasuk, tanggalSelesai);
         for (LaundryService service:services) {
             output += "\n-" + service.getServiceName() + " @ Rp." + service.getHarga(berat);
         }
         output += "\nHarga Akhir: " + calculateHarga();
         if (sisaHariPengerjaan < 0) {
-            output +=  "Ada kompensasi keterlambatan " + (-sisaHariPengerjaan) + " * 2000 hari";
+            output +=  " Ada kompensasi keterlambatan " + (-sisaHariPengerjaan) + " * 2000 hari";
         }
         output += "\n";
         return output;
