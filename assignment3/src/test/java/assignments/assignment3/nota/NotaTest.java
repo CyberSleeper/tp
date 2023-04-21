@@ -178,6 +178,7 @@ class NotaTest {
     void testToStringWithOtherService() {
         Nota nota = new Nota(member, berat, paket, tanggal);
         nota.addService(new AntarService());
+        // assertEquals(0, nota.getBerat());
         String expectedOutput = """
                 [ID Nota = 0]
                 ID    : 2

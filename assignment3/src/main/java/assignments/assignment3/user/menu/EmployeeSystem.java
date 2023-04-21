@@ -28,9 +28,17 @@ public class EmployeeSystem extends SystemCLI {
      */
     @Override
     protected boolean processChoice(int choice) {
-        boolean logout = false;
-        // TODO:
-        return logout;
+        // TODO
+        if (choice == 1) {
+
+        } else if (choice == 2) {
+
+        } else if (choice == 3) {
+            return true;
+        } else {
+
+        }
+        return false;
     }
 
     /**
