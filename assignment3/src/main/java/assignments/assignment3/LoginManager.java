@@ -1,6 +1,5 @@
 package assignments.assignment3;
 
-import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
@@ -40,7 +39,13 @@ public class LoginManager {
      * @return Member object yang berhasil mendaftar, return null jika gagal mendaftar.
      */
     public Member register(String nama, String noHp, String password) {
-        // TODO
+        String id = assignments.assignment1.NotaGenerator.generateId(nama, noHp);
+        SystemCLI system = getSystem(id);
+        Member member = new Member(nama, id, password);
+        if(system == null){
+            memberSystem.addMember(member);
+            return member;
+        }
         return null;
     }
 }
