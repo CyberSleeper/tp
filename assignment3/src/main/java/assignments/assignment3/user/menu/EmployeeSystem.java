@@ -28,11 +28,15 @@ public class EmployeeSystem extends SystemCLI {
      */
     @Override
     protected boolean processChoice(int choice) {
-        // TODO
         if (choice == 1) {
-
+            System.out.println("Stand back! " + loginMember.getNama() + " beginning to nyuci!");
+            for (Nota nota:notaList) {
+                System.out.println(nota.kerjakan());
+            }
         } else if (choice == 2) {
-
+            for (Nota nota:notaList) {
+                System.out.println(nota.getNotaStatus());
+            }
         } else if (choice == 3) {
             return true;
         } else {

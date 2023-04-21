@@ -1,6 +1,7 @@
 package assignments.assignment3.user;
 
 import assignments.assignment3.nota.Nota;
+import assignments.assignment3.nota.NotaManager;
 public class Member {
     protected String id;
     protected String password;
@@ -36,6 +37,7 @@ public class Member {
         }
         newNotaList[notaList.length] = nota;
         notaList = newNotaList;
+        NotaManager.addNota(nota);
     }
 
     /**
