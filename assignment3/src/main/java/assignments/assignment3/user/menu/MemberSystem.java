@@ -69,11 +69,11 @@ public class MemberSystem extends SystemCLI {
             System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
             System.out.println("Hanya tambah 1000 / kg :0");
             System.out.print("[Ketik x untuk tidak mau]: ");
-            boolean setrika = !in.nextLine().equals("x");
+            boolean setrika = !in.nextLine().toLowerCase().equals("x");
             System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!");
             System.out.println("Cuma 2000 / 4kg, kemudian 500 / kg");
             System.out.print("[Ketik x untuk tidak mau]: ");
-            boolean antar = !in.nextLine().equals("x");
+            boolean antar = !in.nextLine().toLowerCase().equals("x");
             String tanggalMasuk = fmt.format(cal.getTime());
 
             Nota newNota = new Nota(loginMember, berat, paket, tanggalMasuk);
