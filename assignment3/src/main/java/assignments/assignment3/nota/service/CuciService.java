@@ -1,7 +1,8 @@
 package assignments.assignment3.nota.service;
 
 public class CuciService implements LaundryService{
-    boolean done = false;
+    private boolean done = false;
+
     @Override
     public String doWork() {
         done = true;

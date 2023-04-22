@@ -3,7 +3,8 @@ package assignments.assignment3.nota.service;
 import assignments.assignment3.nota.Nota;
 
 public class AntarService implements LaundryService{
-    boolean done = false;
+    private boolean done = false;
+    
     @Override
     public String doWork() {
         done = true;
