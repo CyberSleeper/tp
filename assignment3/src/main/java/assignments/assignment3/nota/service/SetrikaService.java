@@ -1,6 +1,7 @@
 package assignments.assignment3.nota.service;
 
 public class SetrikaService implements LaundryService{
+    // variabel untuk menandai status dari service
     private boolean done = false;
     
     @Override

@@ -34,6 +34,7 @@ public class Nota {
             this.baseHarga = 7000;
             this.sisaHariPengerjaan = 3;
         }
+        // menghitung tanggal selesai
         tanggalSelesai = tanggalMasuk;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
@@ -70,6 +71,7 @@ public class Nota {
         return output;
     }
     public void toNextDay() {
+        // jika sudah selesai, sisaHariPengerjaan tidak berkurang lagi kurang dari nol
         if (isDone) {
             if (sisaHariPengerjaan > 0) {
                 sisaHariPengerjaan--;
@@ -79,6 +81,7 @@ public class Nota {
         }
     }
 
+    // menghitung total harga akhir
     public long calculateHarga(){
         long harga = baseHarga * berat;
         for (LaundryService service:services) {

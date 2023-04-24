@@ -66,6 +66,7 @@ public class MemberSystem extends SystemCLI {
                 System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
                 berat = 2;
             }
+            // asumsikan "x" insensitive case
             System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?");
             System.out.println("Hanya tambah 1000 / kg :0");
             System.out.print("[Ketik x untuk tidak mau]: ");
