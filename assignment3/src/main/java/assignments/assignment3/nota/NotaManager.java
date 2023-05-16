@@ -18,6 +18,10 @@ public class NotaManager {
         }
     }
 
+    public static String getDate(){
+        return fmt.format(cal.getTime());
+    }
+
     /**
      * Menambahkan nota baru ke NotaList.
      *
