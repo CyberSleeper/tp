@@ -41,7 +41,65 @@ public class RegisterGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = -1;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        // create name label
+        nameLabel = new JLabel("Masukkan nama Anda:");
+        gbc.gridy++;
+        mainPanel.add(nameLabel, gbc);
+        
+        // create name text field
+        nameTextField = new JTextField();
+        gbc.gridy++;
+        mainPanel.add(nameTextField, gbc);
+        
+        // create phone label
+        phoneLabel = new JLabel("Masukkan nomor handphone Anda:");
+        gbc.gridy++;
+        mainPanel.add(phoneLabel, gbc);
+        
+        // create phone field
+        phoneTextField = new JTextField();
+        gbc.gridy++;
+        mainPanel.add(phoneTextField, gbc);
+
+        // create password label
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        gbc.gridy++;
+        mainPanel.add(passwordLabel, gbc);
+        
+        // create password field
+        passwordField = new JPasswordField();
+        gbc.gridy++;
+        mainPanel.add(passwordField, gbc);
+        
+        // create register button
+        // gbc.anchor = GridBagConstraints.CENTER;
+        registerButton = new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleRegister();
+            }
+        });
+        gbc.gridy++;
+        mainPanel.add(registerButton, gbc);
+
+        // create back button
+        backButton = new JButton("Kembali");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleBack();
+            }
+        });
+        gbc.gridy++;
+        mainPanel.add(backButton, gbc);
+        add(mainPanel);
     }
 
     /**
@@ -49,13 +107,31 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        nameTextField.setText("");
+        phoneTextField.setText("");
+        passwordField.setText("");
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
     /**
-    * Method untuk mendaftarkan member pada sistem.
-    * Akan dipanggil jika pengguna menekan "registerButton"
+     * Method untuk mendaftarkan member pada sistem.
+     * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
         // TODO
+        if (nameTextField.getText().equals("") || phoneTextField.getText().equals("") || passwordField.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(mainPanel, "Semua field di atas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            String strPhone = phoneTextField.getText();
+            int phone = Integer.parseInt(strPhone==null ? "0" : strPhone);
+            if (phone < 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+            phoneTextField.setText("");
+        }
     }
 }
