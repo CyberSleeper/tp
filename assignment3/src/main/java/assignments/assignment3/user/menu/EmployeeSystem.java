@@ -20,6 +20,15 @@ public class EmployeeSystem extends SystemCLI {
         };
     }
 
+    public void addEmployee(Employee[] employees) {
+        Member[] result = new Member[employees.length + memberList.length];
+     
+        System.arraycopy(memberList, 0, result, 0, memberList.length);
+        System.arraycopy(employees, 0, result, memberList.length, employees.length);
+     
+        memberList = result;
+     }     
+
     /**
      * Memproses pilihan dari employee yang masuk ke sistem ini sesuai dengan menu specific.
      *
