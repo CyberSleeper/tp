@@ -32,6 +32,8 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
+            new JButton("Cuci"),
+            new JButton("Display Nota")
         };
     }
 
