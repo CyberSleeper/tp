@@ -46,6 +46,7 @@ public class HomeGUI extends JPanel {
         
         // create title label
         titleLabel = new JLabel("Selamat Datang di CuciCuci System!", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         
         // create login button
         loginButton = new JButton("Login");
@@ -88,7 +89,6 @@ public class HomeGUI extends JPanel {
         mainPanel.add(titleLabel, BorderLayout.NORTH);
         mainPanel.add(option, BorderLayout.CENTER);
         mainPanel.add(dateLabel, BorderLayout.SOUTH);
-        add(mainPanel);
     }
 
     /**

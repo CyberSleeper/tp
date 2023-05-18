@@ -2,10 +2,9 @@ package assignments.assignment4.gui;
 
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
-import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
-import assignments.assignment4.gui.member.AbstractMemberGUI;
+import assignments.assignment4.gui.member.employee.EmployeeSystemGUI;
 import assignments.assignment4.gui.member.member.MemberSystemGUI;
 
 import javax.swing.*;
@@ -16,6 +15,7 @@ import java.awt.event.ActionListener;
 public class LoginGUI extends JPanel {
     public static final String KEY = "LOGIN";
     private JPanel mainPanel;
+    private JPanel form;
     private JLabel idLabel;
     private JTextField idTextField;
     private JLabel passwordLabel;
@@ -29,9 +29,8 @@ public class LoginGUI extends JPanel {
         this.loginManager = loginManager;
 
         // Set up main panel, Feel free to make any changes
-        mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        mainPanel.setPreferredSize(new Dimension(700, 432));
+        mainPanel = new JPanel(new BorderLayout());
+        form = new JPanel(new GridBagLayout());
 
         initGUI();
 
@@ -53,22 +52,22 @@ public class LoginGUI extends JPanel {
         // create id label
         idLabel = new JLabel("Masukkan ID Anda:");
         gbc.gridy++;
-        mainPanel.add(idLabel, gbc);
+        form.add(idLabel, gbc);
         
         // create id text field
         idTextField = new JTextField();
         gbc.gridy++;
-        mainPanel.add(idTextField, gbc);
+        form.add(idTextField, gbc);
         
         // create password label
         passwordLabel = new JLabel("Masukkan password Anda:");
         gbc.gridy++;
-        mainPanel.add(passwordLabel, gbc);
+        form.add(passwordLabel, gbc);
         
         // create password field
         passwordField = new JPasswordField();
         gbc.gridy++;
-        mainPanel.add(passwordField, gbc);
+        form.add(passwordField, gbc);
         
         // create login button
         gbc.anchor = GridBagConstraints.CENTER;
@@ -80,7 +79,7 @@ public class LoginGUI extends JPanel {
             }
         });
         gbc.gridy++;
-        mainPanel.add(loginButton, gbc);
+        form.add(loginButton, gbc);
         
         // create back button
         backButton = new JButton("Kembali");
@@ -91,8 +90,8 @@ public class LoginGUI extends JPanel {
             }
         });
         gbc.gridy++;
-        mainPanel.add(backButton, gbc);
-        add(mainPanel);
+        form.add(backButton, gbc);
+        mainPanel.add(form, BorderLayout.CENTER);
     }
 
     /**
@@ -112,12 +111,23 @@ public class LoginGUI extends JPanel {
     private void handleLogin() {
         String strId = idTextField.getText();
         String strPass = new String(passwordField.getPassword());
-        if(MainFrame.getInstance().login(strId, strPass)){
-            MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        SystemCLI systemCLI =  loginManager.getSystem(strId);
+        if(systemCLI == null){
+            JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Login Gagal!", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Member authMember = systemCLI.authUser(strId, strPass);
+            if(authMember == null){
+                JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Login Gagal!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            MainFrame.getInstance().login(strId, strPass);
+            if(authMember.getClass().getSimpleName().equals("Employee")){
+                MainFrame.getInstance().navigateTo(EmployeeSystemGUI.KEY);
+            }else{
+                MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+            }
             idTextField.setText("");
             passwordField.setText("");
-        }else{
-            JOptionPane.showMessageDialog(mainPanel, "ID atau password invalid!", "Login Gagal!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

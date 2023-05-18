@@ -40,12 +40,10 @@ public class CreateNotaGUI extends JPanel {
 
         // Set up main panel, Feel free to make any changes
         mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         form = new JPanel(new GridBagLayout());
 
         initGUI();
 
-        mainPanel.add(form, BorderLayout.CENTER);
         add(mainPanel, BorderLayout.CENTER);
     }
 
@@ -56,7 +54,6 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void initGUI() {
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // create paket label
@@ -132,6 +129,8 @@ public class CreateNotaGUI extends JPanel {
             }
         });
         form.add(backButton, gbc);
+        
+        mainPanel.add(form, BorderLayout.CENTER);
     }
 
     /**

@@ -125,13 +125,18 @@ public class RegisterGUI extends JPanel {
         try {
             String strName = nameTextField.getText();
             String strPhone = phoneTextField.getText();
+            for(int i = 0; i < strPhone.length(); i++){
+                if(strPhone.charAt(i)<'0' || '9'<strPhone.charAt(i)){
+                    throw new NumberFormatException();
+                }
+            }
             String strPass = new String(passwordField.getPassword());
             Member newMember = loginManager.register(strName, strPhone, strPass);
             if (newMember == null) {
-                JOptionPane.showMessageDialog(mainPanel, "Member sudah terdaftar!", "Duplicate Member", JOptionPane.ERROR_MESSAGE);
-                return;
+                JOptionPane.showMessageDialog(mainPanel, "User dengan nama " + strName + " dan nomor hp " + strPhone + " sudah ada!", "Duplicate Member", JOptionPane.ERROR_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID " + newMember.getId() + "!", "Registration Successfull", JOptionPane.INFORMATION_MESSAGE);
             }
-            JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID " + newMember.getId() + "!", "Registration Successfull", JOptionPane.INFORMATION_MESSAGE);
             nameTextField.setText("");
             phoneTextField.setText("");
             passwordField.setText("");
