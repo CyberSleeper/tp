@@ -45,7 +45,7 @@ public class MainFrame extends JFrame{
                 memberSystemGUI,
         };
         initGUI();
-        cards.show(mainPanel, CreateNotaGUI.KEY);
+        cards.show(mainPanel, HomeGUI.KEY);
         add(mainPanel);
     }
 
