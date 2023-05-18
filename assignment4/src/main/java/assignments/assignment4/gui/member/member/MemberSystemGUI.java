@@ -7,10 +7,10 @@ import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
+    public static MemberSystemGUI instance;
     public static final String KEY = "MEMBER";
 
     public MemberSystemGUI(SystemCLI systemCLI) {
@@ -34,10 +34,9 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
         return new JButton[]{
-            new JButton("Create Nota"),
-            new JButton("Show Detail Nota")
+            new JButton("Saya ingin laundry"),
+            new JButton("Lihat detail nota saya")
         };
     }
 
@@ -60,7 +59,17 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
+        String notaInfo = "";
+        for (Nota nota:loggedInMember.getNotaList()) {
+            notaInfo = notaInfo + nota.toString();
+            notaInfo.concat("\n");
+            System.out.println(notaInfo);
+        }
+
+        JTextArea textArea = new JTextArea();
+        textArea.setText(notaInfo);
+        textArea.setEditable(false);
+        JOptionPane.showMessageDialog(null, textArea, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -68,7 +77,11 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
+        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 
+    public static MemberSystemGUI getInstance(SystemCLI systemCLI){
+        instance = new MemberSystemGUI(systemCLI);
+        return instance;
+    }
 }

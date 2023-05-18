@@ -118,17 +118,24 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
-        // TODO
         if (nameTextField.getText().equals("") || phoneTextField.getText().equals("") || passwordField.getPassword().length == 0) {
             JOptionPane.showMessageDialog(mainPanel, "Semua field di atas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
             return;
         }
         try {
+            String strName = nameTextField.getText();
             String strPhone = phoneTextField.getText();
-            int phone = Integer.parseInt(strPhone==null ? "0" : strPhone);
-            if (phone < 0) {
-                throw new NumberFormatException();
+            String strPass = new String(passwordField.getPassword());
+            Member newMember = loginManager.register(strName, strPhone, strPass);
+            if (newMember == null) {
+                JOptionPane.showMessageDialog(mainPanel, "Member sudah terdaftar!", "Duplicate Member", JOptionPane.ERROR_MESSAGE);
+                return;
             }
+            JOptionPane.showMessageDialog(mainPanel, "Berhasil membuat user dengan ID " + newMember.getId() + "!", "Registration Successfull", JOptionPane.INFORMATION_MESSAGE);
+            nameTextField.setText("");
+            phoneTextField.setText("");
+            passwordField.setText("");
+            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(mainPanel, "Nomor handphone harus berisi angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
             phoneTextField.setText("");

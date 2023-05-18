@@ -96,10 +96,11 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
+        boolean success = false;
         for (Loginable panel:loginablePanel) {
-            // TODO
+            success |= panel.login(id, password);
         }
-        return false;
+        return success;
     }
 
 
