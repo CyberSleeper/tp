@@ -61,15 +61,20 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     private void showDetailNota() {
         String notaInfo = "";
         for (Nota nota:loggedInMember.getNotaList()) {
-            notaInfo = notaInfo + nota.toString();
-            notaInfo.concat("\n");
+            notaInfo = notaInfo + nota.toString() + "\n";
             System.out.println(notaInfo);
         }
 
-        JTextArea textArea = new JTextArea();
+        JTextArea textArea = new JTextArea(15, 30);
         textArea.setText(notaInfo);
         textArea.setEditable(false);
-        JOptionPane.showMessageDialog(null, textArea, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        textArea.setCaretPosition(0);
+        JOptionPane.showMessageDialog(null, scrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
