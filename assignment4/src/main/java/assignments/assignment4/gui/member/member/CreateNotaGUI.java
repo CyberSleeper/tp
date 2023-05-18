@@ -19,7 +19,6 @@ public class CreateNotaGUI extends JPanel {
     public static final String KEY = "CREATE_NOTA";
     private String[] jenisPaket = {"Express", "Fast", "Reguler"};
     private JPanel mainPanel;
-    private JPanel form;
     private JLabel paketLabel;
     private JComboBox<String> paketComboBox;
     private JButton showPaketButton;
@@ -39,8 +38,8 @@ public class CreateNotaGUI extends JPanel {
         this.cal = NotaManager.cal;
 
         // Set up main panel, Feel free to make any changes
-        mainPanel = new JPanel(new BorderLayout());
-        form = new JPanel(new GridBagLayout());
+        mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(100, 10, 10, 10));
 
         initGUI();
 
@@ -60,13 +59,13 @@ public class CreateNotaGUI extends JPanel {
         paketLabel = new JLabel("Paket Laundry:");
         gbc.gridx = 0;
         gbc.gridy = 0;
-        form.add(paketLabel, gbc);
+        mainPanel.add(paketLabel, gbc);
         
         // create paket combobox
         paketComboBox = new JComboBox<>(jenisPaket);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        form.add(paketComboBox, gbc);
+        mainPanel.add(paketComboBox, gbc);
 
         // create show paket button
         showPaketButton = new JButton("Show Paket");
@@ -78,31 +77,31 @@ public class CreateNotaGUI extends JPanel {
         });
         gbc.gridx = 2;
         gbc.gridy = 0;
-        form.add(showPaketButton, gbc);
+        mainPanel.add(showPaketButton, gbc);
 
         // create berat label
         beratLabel = new JLabel("Berat Cucian (Kg):");
         gbc.gridx = 0;
         gbc.gridy = 1;
-        form.add(beratLabel, gbc);
+        mainPanel.add(beratLabel, gbc);
 
         // create berat text field
         beratTextField = new JTextField();
         gbc.gridx = 1;
         gbc.gridy = 1;
-        form.add(beratTextField, gbc);
+        mainPanel.add(beratTextField, gbc);
 
         // create setrika checkbox
         setrikaCheckBox = new JCheckBox("Tambah Setrika Service (1000 / kg)");
         gbc.gridx = 0;
         gbc.gridy = 2;
-        form.add(setrikaCheckBox, gbc);
+        mainPanel.add(setrikaCheckBox, gbc);
 
         // create antar checkbox
         antarCheckBox = new JCheckBox("Tambah Antar Service (2000 / 4kg pertama, kemudian 500 / kg)");
         gbc.gridx = 0;
         gbc.gridy = 3;
-        form.add(antarCheckBox, gbc);
+        mainPanel.add(antarCheckBox, gbc);
 
         // create "create nota" button
         createNotaButton = new JButton("Buat Nota");
@@ -115,7 +114,7 @@ public class CreateNotaGUI extends JPanel {
                 createNota();
             }
         });
-        form.add(createNotaButton, gbc);
+        mainPanel.add(createNotaButton, gbc);
         
         // create back button
         backButton = new JButton("Kembali");
@@ -128,9 +127,8 @@ public class CreateNotaGUI extends JPanel {
                 handleBack();
             }
         });
-        form.add(backButton, gbc);
-        
-        mainPanel.add(form, BorderLayout.CENTER);
+        mainPanel.add(backButton, gbc);
+        add(mainPanel);
     }
 
     /**
