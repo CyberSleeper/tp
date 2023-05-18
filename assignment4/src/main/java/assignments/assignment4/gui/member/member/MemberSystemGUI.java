@@ -64,6 +64,9 @@ public class MemberSystemGUI extends AbstractMemberGUI {
             notaInfo = notaInfo + nota.toString() + "\n";
             System.out.println(notaInfo);
         }
+        if(notaInfo.length() == 0){
+            notaInfo = "Tidak ada nota";
+        }
 
         JTextArea textArea = new JTextArea(15, 30);
         textArea.setText(notaInfo);
